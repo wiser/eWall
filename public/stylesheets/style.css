@@ -1,0 +1,117 @@
+/* @override http://10.10.205.202:8080/stylesheets/style.css */
+
+html, body {
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	overflow: hidden;
+}
+
+*{
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	padding:0;
+	margin: 0;
+
+}
+
+
+body {
+  	display: -moz-box;
+	display: -webkit-box;
+	display: box;
+	-moz-box-orient: vertical;
+	-webkit-box-orient: vertical;
+	box-orient: vertical;
+	background-color: #535353;
+
+}
+
+.cork{
+/*	background-size: cover;
+	background: url('../images/style/cork.png') no-repeat center center fixed;*/
+}
+
+#tools {
+	height:50px;
+	border-bottom: solid 1px #282828;
+	background-color: transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7a7a7a), to(#4f4f4f));
+	background: -moz-linear-gradient(top, #7a7a7a 0%, #4f4f4f 100%);
+	background-attachment: scroll;
+}
+
+
+div.pagesContainer {
+	overflow: hidden;
+	white-space: nowrap;
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	box-flex: 1;
+	background-color: ;
+	margin: 0px 0;
+/*	-webkit-transition:  2000ms ease-in-out;*/
+}
+
+
+#infos {
+	height:100px;
+	bottom: 0;
+	background-color: rgba(125,125,125,.8);
+}
+
+
+
+div#staticPagesContainer {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+div.pageContainer {
+	display: inline-block;
+	height: 100%;
+	border: solid 1px #ccc;
+	background-color:#fff;
+}
+
+div.pageContainer a {
+	color: #00B7FF;
+}
+
+div.pageContainer img {
+	 height: 70%;
+}
+
+
+.highlight {
+	border: 2px solid red;
+}
+
+div.pageContainer:nth-child(2n+0){
+	margin-right: 50px;
+}
+div.pageContainer:nth-child(2n+0){
+	border-left:solid 0px red;
+}
+div.pageContainer:nth-child(2n-1){
+	border-right:solid 0px red;
+}
+
+
+h1{
+	line-height: 50px;
+	padding: 0 20px;
+	display: inline-block;
+	color: #fff;
+	
+}
+
+div.pagesContainer.controller > div.pageContainer,
+div.pagesContainer.controller > div.pageContainer img {
+	height:300px;
+}
+div.pagesContainer.controller > div.pageContainer:nth-child(2n+0){
+	margin-right: 10px;
+}

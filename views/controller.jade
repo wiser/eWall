@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	body
+		header#tools
+			h1 eWall
+			input#resizer(type="range", min="1", max="100", value="75")
+			//-a.scroller(href="#page_"+(i+1)) Aller en page #{(i+1)}
+			span#infos
+		div#staticPagesContainer.pagesContainer(ongesturechange="javascript:pinch(event)").controller
+			div.pageContainer(id="page_s")
+			each page, i in pages
+				div.pageContainer(id="page_"+(i+1))
+					img.page(src="images/pages/"+page)
+			div.pageContainer(id="page_e")
+		footer#infos
+		script(type='text/javascript', src='/javascripts/controller.js')

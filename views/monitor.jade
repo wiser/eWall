@@ -1,0 +1,28 @@
+extends layout
+
+//block content
+//	div#pagesContainer.pagesContainer
+//		each page, i in pages
+//			div.pageContainer(id="page_"+(i+1))
+//				img.page(src="images/pages/"+page)
+//	span#infos
+//	script(type='text/javascript', src='/javascripts/monitor.js')
+
+
+block content
+
+	body.cork
+		header#tools
+			h1 eWall
+
+		div#pagesContainer.pagesContainer.monitor
+			div.pageContainer(id="page_s")
+			each page, i in pages
+				div.pageContainer(id="page_"+(i+1))
+					img.page(src="images/pages/"+page)
+			div.pageContainer(id="page_e")
+
+		//footer#infos
+
+
+		script(type='text/javascript', src='/javascripts/monitor.js')
