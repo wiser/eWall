@@ -29,13 +29,8 @@ body {
 
 }
 
-.cork{
-/*	background-size: cover;
-	background: url('../images/style/cork.png') no-repeat center center fixed;*/
-}
-
-#tools {
-	height:50px;
+header#tools {
+	height:40px;
 	border-bottom: solid 1px #282828;
 	background-color: transparent;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7a7a7a), to(#4f4f4f));
@@ -43,28 +38,15 @@ body {
 	background-attachment: scroll;
 }
 
-
-div.pagesContainer {
-	overflow: hidden;
-	white-space: nowrap;
-	-moz-box-flex: 1;
-	-webkit-box-flex: 1;
-	box-flex: 1;
-	background-color: ;
-	margin: 0px 0;
-/*	-webkit-transition:  2000ms ease-in-out;*/
-}
-
-
-#infos {
+footer#infos {
 	height:100px;
 	bottom: 0;
 	background-color: rgba(125,125,125,.8);
 }
 
+						/* CONTROLLER */
 
-
-div#staticPagesContainer {
+/*div#staticPagesContainer {
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 }
@@ -81,13 +63,80 @@ div.pageContainer a {
 }
 
 div.pageContainer img {
-	 height: 70%;
+	height: 70%;
+}
+
+*/						/* MONITOR */
+
+				/* MODE VERTICAL LINEAR */
+/*body.monitor {
+}
+
+div#monitor {
+}
+
+div#monitor .doublePagesContainer {
+
+}
+
+
+div#monitor div.pageContainer {
+	
+}
+
+div#monitor div.pageContainer.verso {
+
+}
+div#monitor div.pageContainer.recto {
+
+}
+*/
+				/* MODE AUTOWRAP */
+
+div#monitor {
+	/*-webkit-box-flex: 2;*/
+}
+
+div#monitor .doublePagesContainer {
+	float: left;
+	display: -webkit-box;
+	margin : 10px 1px 10px 2px;
+	width: 180px;
+}
+
+div#monitor div.pageContainer {
+	height: 117px;
+	width: 90px;
+	background-position: top left;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+/*
+div#monitor div.pageContainer.verso {
+	float: left;
+}
+div#monitor div.pageContainer.recto {
+	float: right;
+}
+*/
+/*
+div.pagesContainer {
+	overflow: hidden;
+	white-space: nowrap;
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	box-flex: 1;
+	background-color: ;
+	margin: 0px 0;
+	-webkit-transition:  2000ms ease-in-out;
 }
 
 
 .highlight {
 	border: 2px solid red;
 }
+
 
 div.pageContainer:nth-child(2n+0){
 	margin-right: 50px;
@@ -115,3 +164,4 @@ div.pagesContainer.controller > div.pageContainer img {
 div.pagesContainer.controller > div.pageContainer:nth-child(2n+0){
 	margin-right: 10px;
 }
+*/

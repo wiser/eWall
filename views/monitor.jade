@@ -11,18 +11,18 @@ extends layout
 
 block content
 
-	body.cork
+	body.monitor
 		header#tools
 			h1 eWall
 
-		div#pagesContainer.pagesContainer.monitor
-			div.pageContainer(id="page_s")
-			each page, i in pages
-				div.pageContainer(id="page_"+(i+1))
-					img.page(src="images/pages/"+page)
-			div.pageContainer(id="page_e")
-
-		//footer#infos
-
-
+		div#monitor
+			- for (var x = 0; x <= nbPages/2; x++)
+				- var indexPageGauche = 2 * x
+				- var indexPageDroite = 2 * x + 1
+				div.doublePagesContainer
+					div.pageContainer.verso(style="background-image:url(images/pages/"+pages[indexPageGauche]+")")
+						div &nbsp;
+					div.pageContainer.recto(style="background-image:url(images/pages/"+pages[indexPageDroite]+")")
+						div &nbsp;
+		footer#infos
 		script(type='text/javascript', src='/javascripts/monitor.js')

@@ -9,7 +9,7 @@ function init() {
 	globalInit();
 	// variables declaration
 	container = document.getElementById('pagesContainer');
-	var pages = document.getElementsByClassName('page');
+	// var pages = document.getElementsByClassName('page');
 
 	// setInterval(function(){
 	// 	if (container.offsetWidth + container.scrollLeft == container.scrollWidth) {
