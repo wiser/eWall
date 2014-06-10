@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "startdev": "supervisor -i public app.js ",
     "start": "nodejs app.js"
+  },
+  "devDependencies": {
   },
   "dependencies": {
     "express": "3.*",

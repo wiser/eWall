@@ -1,10 +1,7 @@
 var pages = [];
-
-pages.push("page-0.jpeg");
-for (var i=1; i <= 128; i++) {
-	pages.push("page-"+i+".jpeg");
+for (var i=0; i<56; i++) {
+	pages[i] = "http://lorempixel.com/224/290/people?idx="+i;
 };
-pages.push("page-"+i+".jpeg");
 
 exports.controller = function(req, res){
 	res.render('controller', { 
@@ -17,6 +14,7 @@ exports.monitor = function(req, res){
 	res.render('monitor', { 
 		title: 'E-Wall', 
 		nbPages: pages.length,
+		nbDoublesPages: pages.length / 2 + 1,
 		pages: pages 
 	});
 };

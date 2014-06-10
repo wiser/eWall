@@ -1,5 +1,3 @@
-/* @override http://10.10.205.202:8080/stylesheets/style.css */
-
 html, body {
 	height: 100%;
 	padding: 0px;
@@ -17,7 +15,6 @@ html, body {
 
 }
 
-
 body {
   	display: -moz-box;
 	display: -webkit-box;
@@ -26,10 +23,9 @@ body {
 	-webkit-box-orient: vertical;
 	box-orient: vertical;
 	background-color: #535353;
-
 }
 
-header#tools {
+header {
 	height:40px;
 	border-bottom: solid 1px #282828;
 	background-color: transparent;
@@ -38,10 +34,13 @@ header#tools {
 	background-attachment: scroll;
 }
 
-footer#infos {
-	height:100px;
-	bottom: 0;
+footer {
+	position:absolute;
+	bottom: 0px;
+	height: 30px;
+	width: 100%;
 	background-color: rgba(125,125,125,.8);
+	text-align: right;
 }
 
 						/* CONTROLLER */
@@ -66,60 +65,56 @@ div.pageContainer img {
 	height: 70%;
 }
 
-*/						/* MONITOR */
-
-				/* MODE VERTICAL LINEAR */
-/*body.monitor {
+*/						
+					/* MONITOR */
+div#planche {
+	/* Pour le dev */
+	overflow: auto;
 }
-
-div#monitor {
-}
-
-div#monitor .doublePagesContainer {
-
-}
-
-
-div#monitor div.pageContainer {
-	
-}
-
-div#monitor div.pageContainer.verso {
-
-}
-div#monitor div.pageContainer.recto {
-
-}
-*/
-				/* MODE AUTOWRAP */
-
-div#monitor {
-	/*-webkit-box-flex: 2;*/
-}
-
-div#monitor .doublePagesContainer {
+	/* Les containers */
+div#planche div.doublePagesContainer {
 	float: left;
 	display: -webkit-box;
-	margin : 10px 1px 10px 2px;
-	width: 180px;
+	margin : 10px 2px 15px 2px;
+	min-width: 448px;
+	height: 290px;
 }
 
-div#monitor div.pageContainer {
-	height: 117px;
-	width: 90px;
+div#planche div.pageContainer {
+	position: relative;
+	width: 50%;
+	height: 100%;
 	background-position: top left;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
-/*
-div#monitor div.pageContainer.verso {
-	float: left;
+	/* Les folios */
+div#planche div.folio {
+	position: absolute;
+	bottom: -14px;
+	color: white;
+	font-size: 10px;
 }
-div#monitor div.pageContainer.recto {
-	float: right;
+
+div#planche div.folio.gauche {
+	left: 50%;
 }
-*/
+
+div#planche div.folio.droite {
+	right: 50%;
+}
+
+	/* Le mode horizontal */
+div#planche.horizontal {
+/*	flex: 1;
+	-webkit-flex: 1;
+*/    display: flex;
+    display: -webkit-flex;
+}
+
+
+
 /*
 div.pagesContainer {
 	overflow: hidden;

@@ -4,7 +4,7 @@ var io;
 
 function globalInit() {
 	// variables
-	zoneInfos = document.getElementById('infos');
+	zoneInfos = document.getElementById('footer');
 
 	//routines
 	io = io.connect();

@@ -1,15 +1,17 @@
+var pageRatio = Math.round(290 / 224 * 100) / 100; //1,29
+
 window.onload = init;
 window.onresize = function() {
-	resizeItems(pages, 100);
+	// resizeItems(pages, 100);
 }
 
-var container;
+var container, doublesPagesContainers;
 
 function init() {
 	globalInit();
 	// variables declaration
-	container = document.getElementById('pagesContainer');
-	// var pages = document.getElementsByClassName('page');
+	container = document.getElementById('planche');
+	doublesPagesContainers = document.getElementsByClassName('doublePagesContainer');
 
 	// setInterval(function(){
 	// 	if (container.offsetWidth + container.scrollLeft == container.scrollWidth) {
@@ -25,7 +27,7 @@ function init() {
 	})
 
 	io.on('PAGE_RESIZING', function(data) {
-		resizeItems(pages, data.value);
+		resizePage(doublesPagesContainers, data.value);
 	});
 
 	io.on('SCROLL_TO_PAGE_ID', function(data) {
@@ -49,9 +51,10 @@ function init() {
 	// });
 }
 
-function resizeItems(items, height) {
+function resizePages(items, height) {
 	for (var i = 0; i < items.length; i++) {	
-    	items[i].style.height = height + '%';
+    	items[i].style.height = height + 'px';
+    	items[i].style.minWidth = Math.ceil(height / pageRatio) * 2 + 'px';
 	}
 }
 
