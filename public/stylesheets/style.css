@@ -16,12 +16,18 @@ html, body {
 }
 
 body {
-  	display: -moz-box;
+/*  	
+	display: -moz-box;
 	display: -webkit-box;
 	display: box;
 	-moz-box-orient: vertical;
 	-webkit-box-orient: vertical;
 	box-orient: vertical;
+*/	
+    display: flex;
+    display: -webkit-box;
+  	flex-direction: column;
+  	-webkit-box-orient: vertical;
 	background-color: #535353;
 }
 
@@ -40,36 +46,42 @@ footer {
 	height: 30px;
 	width: 100%;
 	background-color: rgba(125,125,125,.8);
-	text-align: right;
+	color: white;
 }
 
-						/* CONTROLLER */
-
-/*div#staticPagesContainer {
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
+span#infosArea {
+	color: white;
+	float: right;
 }
 
-div.pageContainer {
-	display: inline-block;
-	height: 100%;
-	border: solid 1px #ccc;
-	background-color:#fff;
+	/* PLANCHE */
+
+input#resizer {
+	position: absolute;
+	top: 10px;
+	right: 5px;
 }
 
-div.pageContainer a {
-	color: #00B7FF;
-}
-
-div.pageContainer img {
-	height: 70%;
-}
-
-*/						
-					/* MONITOR */
 div#planche {
-	/* Pour le dev */
+	flex: 1;
 	overflow: auto;
+}
+
+div#planche.horizontal {
+	/* mode horizontal par défaut */
+	display: flex;
+	display: -webkit-box;
+	overflow-x: auto;
+}
+
+div#planche.cdfMode {
+	/* mode planche de chamin de fer */
+	display: inline;
+	overflow-y: auto;
+}
+
+div#planche.horizontal.smoothScroll {
+	-webkit-overflow-scrolling: touch;
 }
 	/* Les containers */
 div#planche div.doublePagesContainer {
@@ -105,13 +117,6 @@ div#planche div.folio.droite {
 	right: 50%;
 }
 
-	/* Le mode horizontal */
-div#planche.horizontal {
-/*	flex: 1;
-	-webkit-flex: 1;
-*/    display: flex;
-    display: -webkit-flex;
-}
 
 
 
@@ -125,38 +130,5 @@ div.pagesContainer {
 	background-color: ;
 	margin: 0px 0;
 	-webkit-transition:  2000ms ease-in-out;
-}
-
-
-.highlight {
-	border: 2px solid red;
-}
-
-
-div.pageContainer:nth-child(2n+0){
-	margin-right: 50px;
-}
-div.pageContainer:nth-child(2n+0){
-	border-left:solid 0px red;
-}
-div.pageContainer:nth-child(2n-1){
-	border-right:solid 0px red;
-}
-
-
-h1{
-	line-height: 50px;
-	padding: 0 20px;
-	display: inline-block;
-	color: #fff;
-	
-}
-
-div.pagesContainer.controller > div.pageContainer,
-div.pagesContainer.controller > div.pageContainer img {
-	height:300px;
-}
-div.pagesContainer.controller > div.pageContainer:nth-child(2n+0){
-	margin-right: 10px;
 }
 */

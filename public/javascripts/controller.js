@@ -4,7 +4,9 @@ function init() {
 	globalInit();
 	// variables declaration
 	var imageResizer = document.getElementById('resizer');
-	var imageScroller = document.getElementById('staticPagesContainer');
+	var smoothScroller = document.getElementById('smoothScroll');
+	var modeSwitcher = document.getElementById('modeSwitcher');
+	var imageScroller = document.getElementById('planche');
 	var imageScrollers = document.getElementsByClassName('scroller');
 
 	//events
@@ -23,6 +25,24 @@ function init() {
 	// 		}
 	// 	);
 	// };
+
+	smoothScroller.onchange = function (e) {
+		var planche = document.getElementById('planche');
+		if (this.checked) {
+			planche.className += ' smoothScroll';
+		} else {
+			planche.className = planche.className.replace('smoothScroll', '');
+		}
+	}
+
+	modeSwitcher.onchange = function (e) {
+		var planche = document.getElementById('planche');
+		if (this.checked) {
+			planche.className = planche.className.replace('horizontal', 'cdfMode');
+		} else {
+			planche.className = planche.className.replace('cdfMode', 'horizontal');
+		}
+	}
 
 	imageScroller.onscroll = function(e) {
 		// on traduit l'offset absolu du scroll en pourcentage de la longueur du div moins la partie affichée

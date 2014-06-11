@@ -2,10 +2,6 @@ extends layout
 
 block content
 
-	body
-		header#header
-			h1 Mur de production (#{nbPages} pages)
-
 		div#planche.horizontal
 			- for (var x = 0; x < nbDoublesPages; x++)
 				- var indexPageGauche = 2 * x - 1
@@ -22,6 +18,6 @@ block content
 					if pages[indexPageDroite]
 						div.pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
 							div.folio.droite #{folioPageDroite}
-
 		footer#footer
+			span#infosArea
 		script(type='text/javascript', src='/javascripts/monitor.js')
