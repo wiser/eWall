@@ -37,7 +37,7 @@ function init() {
 
 	io.on('SCROLL_TO_OFFSET', function(data) {
 		// on traduit le pourcentage de la longueur du div moins la partie affichée en offset absolu de scroll
-		flashMessage('scrolling...');
+		flashMessage('scrolling...'+data.value);
 		percentScroll = data.value;
 		maximumScrollOffset = container.scrollWidth - container.offsetWidth;
 		container.scrollLeft =  percentScroll * maximumScrollOffset / 100;

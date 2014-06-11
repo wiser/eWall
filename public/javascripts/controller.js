@@ -6,7 +6,8 @@ function init() {
 	var imageResizer = document.getElementById('resizer');
 	var smoothScroller = document.getElementById('smoothScroll');
 	var modeSwitcher = document.getElementById('modeSwitcher');
-	var imageScroller = document.getElementById('planche');
+	var planche = document.getElementById('planche');
+	var scrollerInput = document.getElementById('scroller');
 	var imageScrollers = document.getElementsByClassName('scroller');
 
 	//events
@@ -26,8 +27,7 @@ function init() {
 	// 	);
 	// };
 
-	smoothScroller.onchange = function (e) {
-		var planche = document.getElementById('planche');
+	smoothScroller.onchange = function(e) {
 		if (this.checked) {
 			planche.className += ' smoothScroll';
 		} else {
@@ -35,8 +35,7 @@ function init() {
 		}
 	}
 
-	modeSwitcher.onchange = function (e) {
-		var planche = document.getElementById('planche');
+	modeSwitcher.onchange = function(e) {
 		if (this.checked) {
 			planche.className = planche.className.replace('horizontal', 'cdfMode');
 		} else {
@@ -44,10 +43,10 @@ function init() {
 		}
 	}
 
-	imageScroller.onscroll = function(e) {
+	planche.onscroll = function(e) {
 		// on traduit l'offset absolu du scroll en pourcentage de la longueur du div moins la partie affichée
-		maximumScrollOffset = imageScroller.scrollWidth - imageScroller.offsetWidth;
-		percentScroll = imageScroller.scrollLeft * 100 / maximumScrollOffset;
+		maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
+		percentScroll = planche.scrollLeft * 100 / maximumScrollOffset;
 		dispachEvent(
 			{
 				action: 'SCROLL_TO_OFFSET',
@@ -55,6 +54,20 @@ function init() {
 			}
 		);
 	};
+
+	scroller.oninput = function(e) {
+		dispachEvent(
+			{
+				action: 'SCROLL_TO_OFFSET',
+				value: this.value
+			}
+		);
+		updateScrollerValue(this.value);
+	}
+
+	updateScrollerValue = function(value) {
+		document.getElementById('scrollerValue').innerHTML = "value";
+	}
 
 	imageResizer.oninput = function(e) {
 		dispachEvent(

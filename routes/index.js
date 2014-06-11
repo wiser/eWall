@@ -1,5 +1,5 @@
 var pages = [];
-for (var i=0; i<56; i++) {
+for (var i=0; i<148; i++) {
 	pages[i] = "http://lorempixel.com/224/290/people?idx="+i;
 };
 

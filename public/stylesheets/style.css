@@ -1,3 +1,10 @@
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box; /* Firefox */
+	padding:0;
+	margin: 0;
+}
+
 html, body {
 	height: 100%;
 	padding: 0px;
@@ -7,32 +14,16 @@ html, body {
 	overflow: hidden;
 }
 
-*{
-	box-sizing:border-box;
-	-moz-box-sizing:border-box; /* Firefox */
-	padding:0;
-	margin: 0;
-
-}
-
-body {
-/*  	
-	display: -moz-box;
-	display: -webkit-box;
-	display: box;
-	-moz-box-orient: vertical;
-	-webkit-box-orient: vertical;
-	box-orient: vertical;
-*/	
+body {	
     display: flex;
-    display: -webkit-box;
-  	flex-direction: column;
-  	-webkit-box-orient: vertical;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
 	background-color: #535353;
 }
 
 header {
-	height:40px;
+	height: 40px;
 	border-bottom: solid 1px #282828;
 	background-color: transparent;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7a7a7a), to(#4f4f4f));
@@ -40,10 +31,13 @@ header {
 	background-attachment: scroll;
 }
 
+input#resizer {
+	position: absolute;
+	top: 10px;
+	right: 5px;
+}
+
 footer {
-	position:absolute;
-	bottom: 0px;
-	height: 30px;
 	width: 100%;
 	background-color: rgba(125,125,125,.8);
 	color: white;
@@ -54,42 +48,51 @@ span#infosArea {
 	float: right;
 }
 
-	/* PLANCHE */
-
-input#resizer {
+input#scroller {
 	position: absolute;
-	top: 10px;
-	right: 5px;
+	left: 10%;
+	bottom: 150px;
+	width: 80%;
 }
 
+	/* PLANCHE */
+
 div#planche {
-	flex: 1;
-	overflow: auto;
+		/* la planche prend l'espace restant entre le header et le footer */
+	flex: 1;   
+	-webkit-flex: 1;
+		/* la planche déclenche une nouvelle flexbox pour les containers de pages */
+	display: flex;
+	display: -webkit-flex;
+	-webkit-overflow-scrolling: auto;
 }
 
 div#planche.horizontal {
-	/* mode horizontal par défaut */
-	display: flex;
-	display: -webkit-box;
+	/* mode horizontal */
+	-webkit-flex-wrap: nowrap;
+	flex-wrap: nowrap;
 	overflow-x: auto;
 }
 
 div#planche.cdfMode {
-	/* mode planche de chamin de fer */
-	display: inline;
+	/* mode chemin de fer */
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
 	overflow-y: auto;
 }
 
-div#planche.horizontal.smoothScroll {
+div#planche.smoothScroll {
 	-webkit-overflow-scrolling: touch;
 }
+
 	/* Les containers */
 div#planche div.doublePagesContainer {
+	display: flex;
+	display: -webkit-flex;
 	float: left;
-	display: -webkit-box;
+	height: 290px;
 	margin : 10px 2px 15px 2px;
 	min-width: 448px;
-	height: 290px;
 }
 
 div#planche div.pageContainer {
@@ -104,7 +107,7 @@ div#planche div.pageContainer {
 	/* Les folios */
 div#planche div.folio {
 	position: absolute;
-	bottom: -14px;
+	bottom: -15px;
 	color: white;
 	font-size: 10px;
 }
@@ -116,19 +119,3 @@ div#planche div.folio.gauche {
 div#planche div.folio.droite {
 	right: 50%;
 }
-
-
-
-
-/*
-div.pagesContainer {
-	overflow: hidden;
-	white-space: nowrap;
-	-moz-box-flex: 1;
-	-webkit-box-flex: 1;
-	box-flex: 1;
-	background-color: ;
-	margin: 0px 0;
-	-webkit-transition:  2000ms ease-in-out;
-}
-*/

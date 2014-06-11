@@ -1,23 +1,26 @@
 extends layout
 
 block content
+	header#header 
+		h1 #{title}
 
-		div#planche.horizontal
-			- for (var x = 0; x < nbDoublesPages; x++)
-				- var indexPageGauche = 2 * x - 1
-				- var folioPageGauche = 2 * x
-				- var indexPageDroite = 2 * x
-				- var folioPageDroite = 2 * x + 1
-				div.doublePagesContainer
-					if pages[indexPageGauche]
-						div.pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
-							div.folio.gauche #{folioPageGauche}
-					else
-						div.pageContainer.gauche
+	div#planche.horizontal
+		- for (var x = 0; x < nbDoublesPages; x++)
+			- var indexPageGauche = 2 * x - 1
+			- var folioPageGauche = 2 * x
+			- var indexPageDroite = 2 * x
+			- var folioPageDroite = 2 * x + 1
+			div.doublePagesContainer
+				if pages[indexPageGauche]
+					div.pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
+						div.folio.gauche #{folioPageGauche}
+				else
+					div.pageContainer.gauche
 
-					if pages[indexPageDroite]
-						div.pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
-							div.folio.droite #{folioPageDroite}
-		footer#footer
-			span#infosArea
-		script(type='text/javascript', src='/javascripts/monitor.js')
+				if pages[indexPageDroite]
+					div.pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
+						div.folio.droite #{folioPageDroite}
+	footer#footer
+		span#infosArea
+	
+	script(type='text/javascript', src='/javascripts/monitor.js')

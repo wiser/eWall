@@ -1,30 +1,37 @@
 extends layout
 
 block content
+	header#header 
+		h1 #{title}
 		input#resizer(type="range", min="1", max="10", value="5")
-		div#planche.horizontal
-			- for (var x = 0; x < nbDoublesPages; x++)
-				- var indexPageGauche = 2 * x - 1
-				- var folioPageGauche = 2 * x
-				- var indexPageDroite = 2 * x
-				- var folioPageDroite = 2 * x + 1
-				div.doublePagesContainer
-					if pages[indexPageGauche]
-						div.pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
-							div.folio.gauche #{folioPageGauche}
-					else
-						div.pageContainer.gauche
 
-					if pages[indexPageDroite]
-						div.pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
-							div.folio.droite #{folioPageDroite}
+	div#planche.horizontal
+		p(style='white-space:pre;')
+		- for (var x = 0; x < nbDoublesPages; x++)
+			- var indexPageGauche = 2 * x - 1
+			- var folioPageGauche = 2 * x
+			- var indexPageDroite = 2 * x
+			- var folioPageDroite = 2 * x + 1
+			div.doublePagesContainer
+				if pages[indexPageGauche]
+					div.pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
+						div.folio.gauche #{folioPageGauche}
+				else
+					div.pageContainer.gauche
 
-		footer#footer
-			input#smoothScroll(type="checkbox", name="smoothScroll")
-			label(for="smoothScroll") Défilement doux
-			&nbsp;
-			input#modeSwitcher(type="checkbox", name="modeSwitcher")
-			label(for="modeSwitcher") Switcher de mode (horizontal/cdf)
-			//-a.scroller(href="#page_"+(i+1)) Aller en page #{(i+1)}
-			span#infosArea
-		script(type='text/javascript', src='/javascripts/controller.js')
+				if pages[indexPageDroite]
+					div.pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
+						div.folio.droite #{folioPageDroite}
+			
+		input#scroller(type="range", min="1", max="100", value="1")
+		span#scrollerValue
+
+	footer#footer
+		input#smoothScroll(type="checkbox", name="smoothScroll")
+		label(for="smoothScroll") Défilement doux
+		&nbsp;
+		input#modeSwitcher(type="checkbox", name="modeSwitcher")
+		label(for="modeSwitcher") Switcher de mode (horizontal/cdf)
+		span#infosArea
+	
+	script(type='text/javascript', src='/javascripts/controller.js')

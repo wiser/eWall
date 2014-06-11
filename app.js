@@ -34,6 +34,9 @@ app.get('/', function(req, res){
 });
 app.get('/controller', routes.controller);
 app.get('/monitor', routes.monitor);
+app.get('/test', function(req, res) {
+	res.sendfile(path.join(__dirname, '/public/index.html'));
+})
 
 app.io.route('new_controller', function(req) {
 	req.io.leave('monitors');
