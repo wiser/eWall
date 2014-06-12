@@ -91,7 +91,7 @@ div#planche div.doublePagesContainer {
 	display: -webkit-flex;
 	float: left;
 	height: 290px;
-	margin : 10px 2px 15px 2px;
+	margin : 10px 20px 15px 2px;
 	min-width: 448px;
 }
 
@@ -113,9 +113,9 @@ div#planche div.folio {
 }
 
 div#planche div.folio.gauche {
-	left: 50%;
+	left: 5%;
 }
 
 div#planche div.folio.droite {
-	right: 50%;
+	right: 5%;
 }
