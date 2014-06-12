@@ -3,10 +3,8 @@ extends layout
 block content
 	header#header 
 		h1 #{title}
-		input#resizer(type="range", min="1", max="100", value="5")
 
 	div#planche.horizontal
-		p(style='white-space:pre;')
 		- for (var x = 0; x < nbDoublesPages; x++)
 			- var indexPageGauche = 2 * x - 1
 			- var folioPageGauche = 2 * x
@@ -14,17 +12,17 @@ block content
 			- var folioPageDroite = 2 * x + 1
 			div.doublePagesContainer
 				if pages[indexPageGauche]
-					div.pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
+					div(id="page_#{folioPageGauche}").pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
 						div.folio.gauche #{folioPageGauche}
 				else
 					div.pageContainer.gauche
 
 				if pages[indexPageDroite]
-					div.pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
+					div(id="page_#{folioPageDroite}").pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
 						div.folio.droite #{folioPageDroite}
-			
-		input#scroller(type="range", min="0", max="100", value="1")
-		span#scrollerValue
+		
+		input#resizer(type="range", min="1", max="50", value="5")
+		input#scroller(type="range", min="0", max="100", value="0")
 
 	footer#footer
 		input#smoothScroll(type="checkbox", name="smoothScroll")

@@ -34,9 +34,6 @@ app.get('/', function(req, res){
 });
 app.get('/controller', routes.controller);
 app.get('/monitor', routes.monitor);
-app.get('/test', function(req, res) {
-	res.sendfile(path.join(__dirname, '/public/index.html'));
-})
 
 app.io.route('new_controller', function(req) {
 	req.io.leave('monitors');
@@ -89,7 +86,7 @@ app.io.route('dispatcher', function(req) {
 	if (req.socket === remoteController) {
 		if (app.io.sockets.clients('monitors').length === 0) {		
 			req.io.emit('info', {
-				message: 'Il n\' y a aucun moniteur référencé !!'
+				message: 'Il n\' y a aucun moniteur connecté...'
 			});
 		} else {
 			// console.log('dispaching', req.data.action, req.data.value);

@@ -26,36 +26,39 @@ function init() {
 		io.emit('new_monitor');
 	})
 
+	io.on('CHANGE_DISPLAY_MODE', function(data) {
+		flashMessage('Changement de mode pour : ' + data.value);
+		switch (data.value) {
+			case 'cdf':
+				container.className = container.className.replace('horizontal', 'cdfMode');
+				break;
+			case 'horizontal':
+				container.className = container.className.replace('cdfMode', 'horizontal');
+				break;
+		}	
+	});
+
 	io.on('PAGE_RESIZING', function(data) {
-		flashMessage('resizing...'+data.value);
+		flashMessage('Zooming...');
+		var actualScrollInPercent = getActualScrollInPercent();
 		resizePages(doublesPagesContainers, data.value);
+		scrollToPercent(actualScrollInPercent);
 	});
 
 	io.on('SCROLL_TO_PAGE_ID', function(data) {
-		scrollTo(data.value);
+		scrollToPage(data.value);
 	});
 
-	io.on('SCROLL_TO_OFFSET', function(data) {
-		// on traduit le pourcentage de la longueur du div moins la partie affichée en offset absolu de scroll
-		flashMessage('scrolling...'+data.value);
-		percentScroll = data.value;
-		maximumScrollOffset = container.scrollWidth - container.offsetWidth;
-		container.scrollLeft =  percentScroll * maximumScrollOffset / 100;
+	io.on('SCROLL_TO_PERCENT', function(data) {
+		// on traduit le pourcentage de la longueur de la planche moins la partie affichée en offset absolu de scroll
+		flashMessage('Scrolling...');
+		scrollToPercent(data.value);
 	});
-
-	// addEventListener("click", function() {
-	// 	if (document.webkitIsFullScreen) {
-	// 		document.webkitExitFullscreen();
-	// 	} else {
-	//     	// document.documentElement.webkitRequestFullScreen(document.documentElement);
-	//     	container.webkitRequestFullScreen(container);
-	// 	}
-	// });
 }
 
 function resizePages(items, percent) {
-	// La valeur reçue varie entre 1 et 10
-	// Pour obtenir une valeur absolue on détermine que 1 vaut 100px
+	// La valeur reçue varie entre 1 et ...
+	// Pour obtenir une valeur absolue on détermine que 1 unité vaut 100px
 	var height = percent * 50;
 	for (var i = 0; i < items.length; i++) {	
     	items[i].style.height = height + 'px';
@@ -63,13 +66,68 @@ function resizePages(items, percent) {
 	}
 }
 
-function scrollTo(pageId) {
+function scrollToPercent(percent) {
+	var displayMode = getActualDisplayMode();
+	switch (displayMode) {
+		case "horizontal":
+			maximumScrollOffset = container.scrollWidth - container.offsetWidth;
+			container.scrollLeft =  percent * maximumScrollOffset / 100;
+			break;
+		case "cdf":
+			maximumScrollOffset = container.scrollHeight - container.offsetHeight;
+			container.scrollTop =  percent * maximumScrollOffset / 100;
+			break;
+		default:
+			throw "Unknown mode";
+	}
+}
+
+function scrollToPage(pageId) {
 	var pages = document.getElementsByClassName('highlight');
 	for (var i = pages.length - 1; i >= 0; i--) {
 		pages[i].className = pages[i].className.replace('highlight', '');
 	};
 	var page = document.getElementById(pageId);
-	container.scrollLeft = page.offsetLeft;
+	// On va amener la page ciblée au centre de l'écran
+	var displayMode = getActualDisplayMode();
+	switch (displayMode) {
+		case "horizontal":
+			container.scrollLeft = page.offsetLeft - container.offsetWidth / 2 + page.offsetWidth / 2;
+			break;
+		case "cdf":
+			container.scrollTop = page.offsetTop - container.offsetHeight / 2 + page.offsetHeight / 2;
+			break;
+		default:
+			throw "Unknown mode";
+	}
 	page.className += ' highlight';
 	flashMessage('Vous affichez actuellement la '+pageId);
+}
+
+function getActualDisplayMode() {
+	if (container.className.indexOf("horizontal") >= 0) {
+		return "horizontal";
+	} else if (container.className.indexOf("cdf") >= 0) {
+		return "cdf";
+	} else {
+		throw "Unknown mode";
+	}
+}
+
+function getActualScrollInPercent() {
+	var displayMode = getActualDisplayMode();
+	switch (displayMode) {
+		case "horizontal":
+				var maximumScrollOffset = container.scrollWidth - container.offsetWidth;
+				var percentScroll = container.scrollLeft * 100 / maximumScrollOffset;
+			break;
+		case "cdf":
+			var maximumScrollOffset = container.scrollHeight - container.offsetHeight;
+			var percentScroll = container.scrollTop * 100 / maximumScrollOffset;
+			break;
+		default:
+			throw "Unknown mode";
+	}
+
+	return percentScroll;
 }

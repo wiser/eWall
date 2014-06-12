@@ -8,24 +8,12 @@ function init() {
 	var modeSwitcher = document.getElementById('modeSwitcher');
 	var planche = document.getElementById('planche');
 	var scrollerInput = document.getElementById('scroller');
-	var imageScrollers = document.getElementsByClassName('scroller');
+	var pages = document.getElementsByClassName('pageContainer');
 
 	//events
 	io.on('connect', function() {
 		io.emit('new_controller');
 	});
-
-	// imageScroller.ontouchmove = function(e) {
-	// 	// on traduit l'offset absolu du scroll en pourcentage de la longueur du div moins la partie affichée
-	// 	maximumScrollOffset = imageScroller.scrollWidth - imageScroller.offsetWidth;
-	// 	percentScroll = imageScroller.scrollLeft * 100 / maximumScrollOffset;
-	// 	dispachEvent(
-	// 		{
-	// 			action: 'SCROLL_TO_OFFSET',
-	// 			value: percentScroll
-	// 		}
-	// 	);
-	// };
 
 	smoothScroller.onchange = function(e) {
 		if (this.checked) {
@@ -37,39 +25,45 @@ function init() {
 
 	modeSwitcher.onchange = function(e) {
 		if (this.checked) {
-			planche.className = planche.className.replace('horizontal', 'cdfMode');
+			dispachEvent(
+				{
+					action: 'CHANGE_DISPLAY_MODE',
+					value: 'cdf'
+				}
+			);
 		} else {
-			planche.className = planche.className.replace('cdfMode', 'horizontal');
+			dispachEvent(
+				{
+					action: 'CHANGE_DISPLAY_MODE',
+					value: 'horizontal'
+				}
+			);
 		}
 	}
 
 	planche.onscroll = function(e) {
 		// on traduit l'offset absolu du scroll en pourcentage de la longueur du div moins la partie affichée
-		maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
-		percentScroll = planche.scrollLeft * 100 / maximumScrollOffset;
+		var maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
+		var percentScroll = planche.scrollLeft * 100 / maximumScrollOffset;
+		flashMessage('Défilement à ' + parseInt(percentScroll) + '%');
 		dispachEvent(
 			{
-				action: 'SCROLL_TO_OFFSET',
+				action: 'SCROLL_TO_PERCENT',
 				value: percentScroll
 			}
 		);
+		// On repercute la valeur du scroll sur le slider
+		scroller.value = percentScroll;
 	};
 
 	scroller.oninput = function(e) {
-		dispachEvent(
-			{
-				action: 'SCROLL_TO_OFFSET',
-				value: this.value
-			}
-		);
-		updateScrollerValue(this.value);
-	}
-
-	updateScrollerValue = function(value) {
-		document.getElementById('scrollerValue').innerHTML = "value";
+		flashMessage('Défilement à ' + this.value + '%');
+		scrollToPercent(this.value);
 	}
 
 	imageResizer.oninput = function(e) {
+		var valueinPercent = this.value  * 100 / this.max;
+		flashMessage('Zoom à ' + valueinPercent + '%');
 		dispachEvent(
 			{
 				action: 'PAGE_RESIZING',
@@ -78,16 +72,21 @@ function init() {
 		);
 	}
 
-	for (var i = imageScrollers.length - 1; i >= 0; i--) {
-		imageScrollers[i].onclick = function() {
+	for (var i = pages.length - 1; i >= 0; i--) {
+		pages[i].onclick = function() {
 			dispachEvent(
 				{
 					action: 'SCROLL_TO_PAGE_ID',
-					value: this.hash.substring(1)
+					value: this.id
 				}
 			);
 		}
 	};
+}
+
+function scrollToPercent(percent) {
+	var maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
+	planche.scrollLeft =  percent * maximumScrollOffset / 100;
 }
 
 function pinch(e) {

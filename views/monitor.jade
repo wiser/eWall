@@ -12,13 +12,13 @@ block content
 			- var folioPageDroite = 2 * x + 1
 			div.doublePagesContainer
 				if pages[indexPageGauche]
-					div.pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
+					div(id="page_#{folioPageGauche}").pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
 						div.folio.gauche #{folioPageGauche}
 				else
 					div.pageContainer.gauche
 
 				if pages[indexPageDroite]
-					div.pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
+					div(id="page_#{folioPageDroite}").pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
 						div.folio.droite #{folioPageDroite}
 	footer#footer
 		span#infosArea
