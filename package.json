@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "3.*",
     "express.io": "*",
-    "jade": "*"
+    "jade": "*",
+    "q-io": "*"
   }
 }

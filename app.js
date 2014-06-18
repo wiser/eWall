@@ -7,6 +7,7 @@ var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 var app = express();
+var qHttp = require('q-io/http');
 
 var remoteController = {};
 
@@ -99,7 +100,110 @@ app.io.route('dispatcher', function(req) {
 	}
 });
 
-// http.createServer(app).listen(app.get('port'), function(){
+// var getTicket = function() {
+// 	return qHttp.request({
+// 		url: "http://wwg-svmapppsbx1.siege.la.priv/Enterprise",
+// 		method: "post",
+// 		headers: {
+// 			"Content-Type": "application/json"
+// 		},
+// 		body: {
+// 			method: "LogOn",
+// 			params: {
+// 				User: "woodwing",
+// 				Password: "ww",
+// 				ClientName: "NodeJs",
+// 				ClientAppName: "io/http",
+// 				ClientAppVersion: "9.2.1 Build 186",
+// 				RequestTicket: true				
+// 			}
+// 		}
+// 	}).then(
+// 		function(response) {
+// 			return resp.body.read();
+// 		}
+// 	).then(
+// 		function(resp) {
+// 			return JSON.parse(resp.toString());
+// 		}
+// 	).then(
+// 		function(json) {
+// 			return json.results.Ticket;
+// 		}
+// 	);
+// }
+
+// getTicket();
+
+var bodyTicketRequest = JSON.stringify(
+	{
+		method: "LogOn",
+		params: [{
+			User: "woodwing",
+			Password: "ww",
+			ClientName: "NodeJs",
+			ClientAppName: "io/http",
+			ClientAppVersion: "9.2.1 Build 186",
+			RequestTicket: true				
+		}],
+		id: 0
+	}
+);
+
+var getPages = function() {
+	qHttp.request({
+			url : "http://wwg-svmapppsbx1.siege.la.priv/Enterprise/index.php?protocol=JSON",
+			method : "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: [bodyTicketRequest]
+		}).then(
+		function(resp){
+			return resp.body.read();
+		}).then(function(body){
+			ticket = JSON.parse(body).result.Ticket;
+
+			var bodyPagesRequest = JSON.stringify(
+				{
+					method: "GetPagesInfo",
+					params: [{
+						Ticket: ticket,
+						Issue: {
+							__classname__: "Issue",
+							Id: 6
+						},
+						IDs: {},
+						Edition: {
+							__classname__: "Edition",
+							Id: 4
+						}
+					}],
+					id: 1
+				}
+			);
+
+			qHttp.request({
+				url : "http://wwg-svmapppsbx1.siege.la.priv/Enterprise/index.php?protocol=JSON",
+				method : "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: [bodyPagesRequest]
+			}).then(
+				function(resp){
+					return resp.body.read();
+				}).then(function(body){
+					body = JSON.parse(body);
+					console.log(body.result.LayoutObjects);
+				}
+			);
+		}
+	);
+}
+
+setInterval(getPages, 1500);
+
 app.listen(app.get('port'), function(){
   console.log('Express.io server listening on port ' + app.get('port'));
 });
