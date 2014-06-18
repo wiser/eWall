@@ -164,7 +164,7 @@ var getPages = function() {
 		}).then(function(body){
 			ticket = JSON.parse(body).result.Ticket;
 
-			var bodyPagesRequest = JSON.stringify(
+			var bodyPagesInfosRequest = JSON.stringify(
 				{
 					method: "GetPagesInfo",
 					params: [{
@@ -189,20 +189,31 @@ var getPages = function() {
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: [bodyPagesRequest]
+				body: [bodyPagesInfosRequest]
 			}).then(
-				function(resp){
+				function(resp) {
 					return resp.body.read();
-				}).then(function(body){
+				}).then(function(body) {
 					body = JSON.parse(body);
-					console.log(body.result.LayoutObjects);
+						// on ne retourne que la première et seule layout et édition
+					return {
+						layoutObject: body.result.LayoutObjects[0],
+						pages: body.result.EditionsPages[0]
+					};
+				}
+			).then(
+				function(pagesInfos) {
+					app.io.sockets.emit('PAGES_UPDATE', {
+						layout: pagesInfos.layoutObject,
+						pages: pagesInfos.pages
+					});
 				}
 			);
 		}
 	);
 }
 
-setInterval(getPages, 1500);
+setInterval(getPages, 30000);
 
 app.listen(app.get('port'), function(){
   console.log('Express.io server listening on port ' + app.get('port'));

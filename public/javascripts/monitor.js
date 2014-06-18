@@ -54,10 +54,6 @@ function init() {
 		flashMessage('Scrolling...');
 		scrollToPercent(data.value);
 	});
-
-	io.on('RESET', function(data) {
-		window.location.reload();
-	})
 }
 
 function resizePages(items, percent) {
@@ -131,4 +127,26 @@ function getHalfScreenSizeInPercent() {
 	var halfScreenSizeInPercent = planche.offsetWidth * 100 / maximumScrollOffset;
 
 	return halfScreenSizeInPercent;
+}
+
+function handlePagesUpdate(data) {
+	var layout = data.layout;
+	var pages = data.pages;
+	var updatedFolios = [];
+	for (var i = pages.PageObjects.length - 1; i >= 0; i--) {
+		var page = pages.PageObjects[i];
+		var pagePreview = determinePagePreview(layout, page, 'preview');
+		var actualPage = document.getElementById('page_'+page.PageNumber);
+		if (actualPage && page) {
+			var actualBackgroundUrl = actualPage.style.backgroundImage;
+			if (actualBackgroundUrl.indexOf(pagePreview) < 0 ) {
+				//nouvelle image !!
+				actualPage.style.backgroundImage = 'url('+pagePreview+')';
+				updatedFolios.push(page.PageNumber);
+			};
+		};
+		if (updatedFolios.length > 0) {
+			flashMessage('Folios mis à jour : ' + updatedFolios.sort().join(', '));
+		};
+	};
 }

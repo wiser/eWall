@@ -105,3 +105,25 @@ function pinch(e) {
 		}
 	);
 }
+
+function handlePagesUpdate(data) {
+	var layout = data.layout;
+	var pages = data.pages;
+	var updatedFolios = [];
+	for (var i = pages.PageObjects.length - 1; i >= 0; i--) {
+		var page = pages.PageObjects[i];
+		var pagePreview = determinePagePreview(layout, page, 'thumbnail');
+		var actualPage = document.getElementById('page_'+page.PageNumber);
+		if (actualPage && page) {
+			var actualBackgroundUrl = actualPage.style.backgroundImage;
+			if (actualBackgroundUrl.indexOf(pagePreview) < 0 ) {
+				//nouvelle image !!
+				actualPage.style.backgroundImage = 'url('+pagePreview+')';
+				updatedFolios.push(page.PageNumber);
+			};
+		};
+		if (updatedFolios.length > 0) {
+			flashMessage('Folios mis à jour : ' + updatedFolios.sort().join(', '));
+		};
+	};
+}

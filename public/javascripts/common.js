@@ -19,6 +19,14 @@ function globalInit() {
 	io.on('info', function(data) {
 		flashMessage(data.message);
 	});
+
+	io.on('PAGES_UPDATE', function(data) {
+		handlePagesUpdate(data);
+	})
+
+	io.on('RESET', function(data) {
+		window.location.reload();
+	})
 }
 
 function flashMessage(message, timeout) {
@@ -28,6 +36,11 @@ function flashMessage(message, timeout) {
 	infoEraser = setTimeout(function(){
 		zoneInfos.innerHTML = '';
 	}, duration);
+}
+
+function dispachEvent(data, route) {
+	route = typeof route !== 'undefined' ? route : 'dispatcher';
+	io.emit(route, data);
 }
 
 function getActualDisplayMode() {
@@ -40,7 +53,19 @@ function getActualDisplayMode() {
 	}
 }
 
-function dispachEvent(data, route) {
-	route = typeof route !== 'undefined' ? route : 'dispatcher';
-	io.emit(route, data);
+function determinePagePreview(layout, page, rendition) {
+	switch (rendition) {
+		case 'thumbnail':
+			var renditionId = 1;
+			break;
+		case 'preview':
+			var renditionId = 2;
+			break;
+		case 'output':
+			var renditionId = 3;
+			break;
+	}
+	var serveurBaseUrl = 'http://wwg-svmapppsbx1.siege.la.priv/filestore/';
+
+	return serveurBaseUrl + page.ParentLayoutId + '-page' + page.PageNumber + '-' + renditionId + '.v' + layout.Version;
 }
