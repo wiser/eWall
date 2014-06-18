@@ -1,3 +1,4 @@
+var doublesPagesContainers;
 var pageRatio = Math.round(290 / 224 * 100) / 100; //1,29
 
 window.onload = init;
@@ -5,12 +6,10 @@ window.onresize = function() {
 	// resizeItems(pages, 100);
 }
 
-var container, doublesPagesContainers;
 
 function init() {
 	globalInit();
 	// variables declaration
-	container = document.getElementById('planche');
 	doublesPagesContainers = document.getElementsByClassName('doublePagesContainer');
 
 	// setInterval(function(){
@@ -30,10 +29,10 @@ function init() {
 		flashMessage('Changement de mode pour : ' + data.value);
 		switch (data.value) {
 			case 'cdf':
-				container.className = container.className.replace('horizontal', 'cdfMode');
+				planche.className = planche.className.replace('horizontal', 'cdfMode');
 				break;
 			case 'horizontal':
-				container.className = container.className.replace('cdfMode', 'horizontal');
+				planche.className = planche.className.replace('cdfMode', 'horizontal');
 				break;
 		}	
 	});
@@ -41,6 +40,7 @@ function init() {
 	io.on('PAGE_RESIZING', function(data) {
 		flashMessage('Zooming...');
 		var actualScrollInPercent = getActualScrollInPercent();
+		var actualScreenCenterInPercent = getHalfScreenSizeInPercent();
 		resizePages(doublesPagesContainers, data.value);
 		scrollToPercent(actualScrollInPercent);
 	});
@@ -54,6 +54,10 @@ function init() {
 		flashMessage('Scrolling...');
 		scrollToPercent(data.value);
 	});
+
+	io.on('RESET', function(data) {
+		window.location.reload();
+	})
 }
 
 function resizePages(items, percent) {
@@ -70,15 +74,15 @@ function scrollToPercent(percent) {
 	var displayMode = getActualDisplayMode();
 	switch (displayMode) {
 		case "horizontal":
-			maximumScrollOffset = container.scrollWidth - container.offsetWidth;
-			container.scrollLeft =  percent * maximumScrollOffset / 100;
+			maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
+			planche.scrollLeft =  percent * maximumScrollOffset / 100;
 			break;
 		case "cdf":
-			maximumScrollOffset = container.scrollHeight - container.offsetHeight;
-			container.scrollTop =  percent * maximumScrollOffset / 100;
+			maximumScrollOffset = planche.scrollHeight - planche.offsetHeight;
+			planche.scrollTop =  percent * maximumScrollOffset / 100;
 			break;
 		default:
-			throw "Unknown mode";
+			throw "Unknown display  mode";
 	}
 }
 
@@ -92,42 +96,39 @@ function scrollToPage(pageId) {
 	var displayMode = getActualDisplayMode();
 	switch (displayMode) {
 		case "horizontal":
-			container.scrollLeft = page.offsetLeft - container.offsetWidth / 2 + page.offsetWidth / 2;
+			planche.scrollLeft = page.offsetLeft - planche.offsetWidth / 2 + page.offsetWidth / 2;
 			break;
 		case "cdf":
-			container.scrollTop = page.offsetTop - container.offsetHeight / 2 + page.offsetHeight / 2;
+			planche.scrollTop = page.offsetTop - planche.offsetHeight / 2 + page.offsetHeight / 2;
 			break;
 		default:
-			throw "Unknown mode";
+			throw "Unknown display mode";
 	}
 	page.className += ' highlight';
 	flashMessage('Vous affichez actuellement la '+pageId);
-}
-
-function getActualDisplayMode() {
-	if (container.className.indexOf("horizontal") >= 0) {
-		return "horizontal";
-	} else if (container.className.indexOf("cdf") >= 0) {
-		return "cdf";
-	} else {
-		throw "Unknown mode";
-	}
 }
 
 function getActualScrollInPercent() {
 	var displayMode = getActualDisplayMode();
 	switch (displayMode) {
 		case "horizontal":
-				var maximumScrollOffset = container.scrollWidth - container.offsetWidth;
-				var percentScroll = container.scrollLeft * 100 / maximumScrollOffset;
+			var maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
+			var percentScroll = planche.scrollLeft * 100 / maximumScrollOffset;
 			break;
 		case "cdf":
-			var maximumScrollOffset = container.scrollHeight - container.offsetHeight;
-			var percentScroll = container.scrollTop * 100 / maximumScrollOffset;
+			var maximumScrollOffset = planche.scrollHeight - planche.offsetHeight;
+			var percentScroll = planche.scrollTop * 100 / maximumScrollOffset;
 			break;
 		default:
-			throw "Unknown mode";
+			throw "Unknown display mode";
 	}
 
 	return percentScroll;
+}
+
+function getHalfScreenSizeInPercent() {
+	var maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
+	var halfScreenSizeInPercent = planche.offsetWidth * 100 / maximumScrollOffset;
+
+	return halfScreenSizeInPercent;
 }

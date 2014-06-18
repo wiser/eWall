@@ -3,12 +3,12 @@ window.onload = init;
 function init() {
 	globalInit();
 	// variables declaration
+	var pages = document.getElementsByClassName('pageContainer');
 	var imageResizer = document.getElementById('resizer');
+	var scrollerInput = document.getElementById('scroller');
 	var smoothScroller = document.getElementById('smoothScroll');
 	var modeSwitcher = document.getElementById('modeSwitcher');
-	var planche = document.getElementById('planche');
-	var scrollerInput = document.getElementById('scroller');
-	var pages = document.getElementsByClassName('pageContainer');
+	var resetMonitor = document.getElementById('resetMonitor');
 
 	//events
 	io.on('connect', function() {
@@ -70,6 +70,14 @@ function init() {
 				value: this.value
 			}
 		);
+	}
+
+	resetMonitor.onclick = function(e) {
+		dispachEvent(
+			{
+				action: 'RESET'
+			}
+		)
 	}
 
 	for (var i = pages.length - 1; i >= 0; i--) {

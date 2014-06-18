@@ -1,9 +1,11 @@
 var zoneInfos;
 var infoEraser;
 var io;
+var planche;
 
 function globalInit() {
-	// variables
+	//variables
+	planche = document.getElementById('planche');
 	zoneInfos = document.getElementById('infosArea');
 
 	//routines
@@ -26,6 +28,16 @@ function flashMessage(message, timeout) {
 	infoEraser = setTimeout(function(){
 		zoneInfos.innerHTML = '';
 	}, duration);
+}
+
+function getActualDisplayMode() {
+	if (planche.className.indexOf("horizontal") >= 0) {
+		return "horizontal";
+	} else if (planche.className.indexOf("cdf") >= 0) {
+		return "cdf";
+	} else {
+		throw "Unknown display mode";
+	}
 }
 
 function dispachEvent(data, route) {
