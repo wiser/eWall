@@ -2,6 +2,7 @@ var zoneInfos;
 var infoEraser;
 var io;
 var planche;
+var mediaBaseUrl = 'http://wwg-svmapppsbx1.siege.la.priv/filestore/';
 
 function globalInit() {
 	//variables
@@ -65,7 +66,6 @@ function determinePagePreview(layout, page, rendition) {
 			var renditionId = 3;
 			break;
 	}
-	var serveurBaseUrl = 'http://wwg-svmapppsbx1.siege.la.priv/filestore/';
 
-	return serveurBaseUrl + page.ParentLayoutId + '-page' + page.PageNumber + '-' + renditionId + '.v' + layout.Version;
+	return mediaBaseUrl + page.ParentLayoutId + '-page' + page.PageNumber + '-' + renditionId + '.v' + layout.Version;
 }

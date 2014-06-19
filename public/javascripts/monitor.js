@@ -40,7 +40,6 @@ function init() {
 	io.on('PAGE_RESIZING', function(data) {
 		flashMessage('Zooming...');
 		var actualScrollInPercent = getActualScrollInPercent();
-		var actualScreenCenterInPercent = getHalfScreenSizeInPercent();
 		resizePages(doublesPagesContainers, data.value);
 		scrollToPercent(actualScrollInPercent);
 	});
@@ -120,13 +119,6 @@ function getActualScrollInPercent() {
 	}
 
 	return percentScroll;
-}
-
-function getHalfScreenSizeInPercent() {
-	var maximumScrollOffset = planche.scrollWidth - planche.offsetWidth;
-	var halfScreenSizeInPercent = planche.offsetWidth * 100 / maximumScrollOffset;
-
-	return halfScreenSizeInPercent;
 }
 
 function handlePagesUpdate(data) {
