@@ -108,7 +108,7 @@ function refreshPages() {
 	.then(
 		function(pagesInfos){
 			app.io.sockets.emit('PAGES_UPDATE', {
-				layout: pagesInfos.layoutObject,
+				layouts: pagesInfos.layoutObject,
 				pages: pagesInfos.pages
 			});
 		}

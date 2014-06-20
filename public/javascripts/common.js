@@ -66,6 +66,12 @@ function determinePagePreview(layout, page, rendition) {
 			var renditionId = 3;
 			break;
 	}
+	var directory = '/';
+	var directoryId = page.ParentLayoutId;
+	while (directoryId % 100 != directoryId) {
+		directory += Math.floor(directoryId / 100) + '/';
+		directoryId = directoryId % 100;
+	}
 
-	return mediaBaseUrl + page.ParentLayoutId + '-page' + page.PageNumber + '-' + renditionId + '.v' + layout.Version;
+	return mediaBaseUrl + directory + page.ParentLayoutId + '-page' + page.PageNumber + '-' + renditionId + '.v' + layout.Version;
 }

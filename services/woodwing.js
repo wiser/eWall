@@ -59,7 +59,7 @@ exports.getPages = function() {
 
 						// on ne retourne que la première et seule layout et édition
 					return {
-						layoutObject: body.result.LayoutObjects[0],
+						layoutObject: body.result.LayoutObjects,
 						pages: body.result.EditionsPages[0]
 					};
 				}

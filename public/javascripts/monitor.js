@@ -26,7 +26,6 @@ function init() {
 	})
 
 	io.on('CHANGE_DISPLAY_MODE', function(data) {
-		flashMessage('Changement de mode pour : ' + data.value);
 		switch (data.value) {
 			case 'cdf':
 				planche.className = planche.className.replace('horizontal', 'cdfMode');
@@ -38,7 +37,6 @@ function init() {
 	});
 
 	io.on('PAGE_RESIZING', function(data) {
-		flashMessage('Zooming...');
 		var actualScrollInPercent = getActualScrollInPercent();
 		resizePages(doublesPagesContainers, data.value);
 		scrollToPercent(actualScrollInPercent);
@@ -50,7 +48,6 @@ function init() {
 
 	io.on('SCROLL_TO_PERCENT', function(data) {
 		// on traduit le pourcentage de la longueur de la planche moins la partie affichée en offset absolu de scroll
-		flashMessage('Scrolling...');
 		scrollToPercent(data.value);
 	});
 }
@@ -100,7 +97,6 @@ function scrollToPage(pageId) {
 			throw "Unknown display mode";
 	}
 	page.className += ' highlight';
-	flashMessage('Vous affichez actuellement la '+pageId);
 }
 
 function getActualScrollInPercent() {
@@ -122,12 +118,13 @@ function getActualScrollInPercent() {
 }
 
 function handlePagesUpdate(data) {
-	var layout = data.layout;
+	var layouts = data.layouts;
 	var pages = data.pages;
 	var updatedFolios = [];
 	for (var i = pages.PageObjects.length - 1; i >= 0; i--) {
 		var page = pages.PageObjects[i];
-		var pagePreview = determinePagePreview(layout, page, 'preview');
+		var pageLayout = determinePageLayout(layouts, page);
+		var pagePreview = determinePagePreview(pageLayout, page, 'preview');
 		var actualPage = document.getElementById('page_'+page.PageNumber);
 		if (actualPage && page) {
 			var actualBackgroundUrl = actualPage.style.backgroundImage;
@@ -138,7 +135,16 @@ function handlePagesUpdate(data) {
 			};
 		};
 		if (updatedFolios.length > 0) {
-			flashMessage('Folios mis à jour : ' + updatedFolios.sort().join(', '));
+			flashMessage('Derniers folios mis à jour : ' + updatedFolios.sort().join(', '));
 		};
 	};
+}
+
+function determinePageLayout(layouts, page) {
+	for (var i = layouts.length - 1; i >= 0; i--) {
+		if (layouts[i].Id == page.ParentLayoutId) {
+			return layouts[i]
+		}
+	}
+	throw new Exception("Impossible de déterminer le fichier InDesign contenant la page "+page.PageNumber);
 }

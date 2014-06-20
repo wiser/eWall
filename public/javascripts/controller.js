@@ -107,12 +107,13 @@ function pinch(e) {
 }
 
 function handlePagesUpdate(data) {
-	var layout = data.layout;
+	var layouts = data.layouts;
 	var pages = data.pages;
 	var updatedFolios = [];
 	for (var i = pages.PageObjects.length - 1; i >= 0; i--) {
 		var page = pages.PageObjects[i];
-		var pagePreview = determinePagePreview(layout, page, 'thumbnail');
+		var pageLayout = determinePageLayout(layouts, page);
+		var pagePreview = determinePagePreview(pageLayout, page, 'thumbnail');
 		var actualPage = document.getElementById('page_'+page.PageNumber);
 		if (actualPage && page) {
 			var actualBackgroundUrl = actualPage.style.backgroundImage;
@@ -126,4 +127,13 @@ function handlePagesUpdate(data) {
 			flashMessage('Folios mis à jour : ' + updatedFolios.sort().join(', '));
 		};
 	};
+}
+
+function determinePageLayout(layouts, page) {
+	for (var i = layouts.length - 1; i >= 0; i--) {
+		if (layouts[i].Id == page.ParentLayoutId) {
+			return layouts[i]
+		}
+	}
+	throw new Exception("Impossible de déterminer le fichier InDesign contenant la page "+page.PageNumber);
 }

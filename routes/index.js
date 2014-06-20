@@ -1,15 +1,17 @@
-var pages = [];
+var pagesControllers = [];
+var pagesMonitor = [];
 for (var i=0; i<148; i++) {
-	pages[i] = "http://lorempixel.com/224/290/people?idx="+i;
+	pagesControllers[i] = "'/images/pages/controller/PMAT_3395_PMAG-page" + (i + 1) + ".jpg'";
+	pagesMonitor[i] = "'/images/pages/monitor/jpg/PMAT_3395_PMAG " + (i + 1) + ".jpeg'";
 };
 
-var nbPages = pages.length;
+var nbPages = pagesControllers.length;
 var nbDoublesPages = nbPages / 2 + 1;
 
 exports.controller = function(req, res){
 	res.render('controller', { 
 		title: 'Mur de production ('+nbPages+' pages)',
-		pages: pages,
+		pages: pagesControllers,
 		nbPages: nbPages,
 		nbDoublesPages: nbDoublesPages,
 	});
@@ -18,7 +20,7 @@ exports.controller = function(req, res){
 exports.monitor = function(req, res){
 	res.render('monitor', { 
 		title: 'Mur de production ('+nbPages+' pages)',
-		pages: pages,
+		pages: pagesMonitor,
 		nbPages: nbPages,
 		nbDoublesPages: nbDoublesPages,
 	});
