@@ -5,7 +5,7 @@ block content
 		h1 #{title}
 		div#connectivityArea.disconnected
 
-	div#planche.horizontal
+	div#planche.controller.horizontal
 		- for (var x = 0; x < nbDoublesPages; x++)
 			- var indexPageGauche = 2 * x - 1
 			- var folioPageGauche = 2 * x
@@ -21,18 +21,23 @@ block content
 				if pages[indexPageDroite]
 					div.pageContainer.droite(id="page_#{folioPageDroite}", style="background-image:url("+pages[indexPageDroite]+")")
 						div.folio.droite #{folioPageDroite}
-		
-		input#resizer(type="range", min="1", max="50", value="5")
-		input#scroller(type="range", min="0", max="100", value="0")
+		div#tools
+			div.resizer
+				input#resizer(type="range", min="1", max="50", value="5")
+
+			div.modeSwitcher
+				input(id="modeSwitcher", type="checkbox", name="modeSwitcher")
+				label(for="modeSwitcher")  Switcher de mode (horizontal/cdf)
+
+			div.resetMonitor
+				button(id="resetMonitor") Relancer le(s) moniteur(s)
+
+			div.scroller
+				input#scroller(type="range", min="0", max="100", value="0")
 
 	footer#footer
 		input#smoothScroll(type="checkbox", name="smoothScroll")
 		label(for="smoothScroll") Défilement doux
-		&nbsp;
-		input#modeSwitcher(type="checkbox", name="modeSwitcher")
-		label(for="modeSwitcher") Switcher de mode (horizontal/cdf)
-		&nbsp;
-		button(id="resetMonitor") Relancer le moniteur
 		span#infosArea
 	
 	script(type='text/javascript', src='/javascripts/controller.js')
