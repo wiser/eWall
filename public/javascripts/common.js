@@ -1,3 +1,4 @@
+var connectivityArea;
 var zoneInfos;
 var infoEraser;
 var io;
@@ -7,13 +8,19 @@ var mediaBaseUrl = 'http://wwg-svmapppsbx1.siege.la.priv/filestore/';
 function globalInit() {
 	//variables
 	planche = document.getElementById('planche');
+	connectivityArea = document.getElementById('connectivityArea');
 	zoneInfos = document.getElementById('infosArea');
 
 	//routines
 	io = io.connect();
 
 	//events
-	io.on('disconnect', function () {
+	io.on('connect', function() {
+		connectivityArea.className = 'connected';
+	})
+	
+	io.on('disconnect', function() {
+		connectivityArea.className = connectivityArea.className.replace('connected', '');
   		flashMessage('Le serveur est injoignable...');
 	});
 
@@ -34,9 +41,11 @@ function flashMessage(message, timeout) {
 	duration = typeof timeout === 'undefined' ? 5000 : timeout;
 	clearTimeout(infoEraser);
 	zoneInfos.innerHTML = message;
-	infoEraser = setTimeout(function(){
-		zoneInfos.innerHTML = '';
-	}, duration);
+	if (duration > 0) {
+		infoEraser = setTimeout(function(){
+			zoneInfos.innerHTML = '';
+		}, duration);
+	};
 }
 
 function dispachEvent(data, route) {

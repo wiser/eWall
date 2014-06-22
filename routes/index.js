@@ -10,7 +10,7 @@ var nbDoublesPages = nbPages / 2 + 1;
 
 exports.controller = function(req, res){
 	res.render('controller', { 
-		title: 'Mur de production ('+nbPages+' pages)',
+		title: 'Mur numérique ('+nbPages+' pages)',
 		pages: pagesControllers,
 		nbPages: nbPages,
 		nbDoublesPages: nbDoublesPages,
@@ -19,7 +19,7 @@ exports.controller = function(req, res){
 
 exports.monitor = function(req, res){
 	res.render('monitor', { 
-		title: 'Mur de production ('+nbPages+' pages)',
+		title: 'Mur numérique',
 		pages: pagesMonitor,
 		nbPages: nbPages,
 		nbDoublesPages: nbDoublesPages,

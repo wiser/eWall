@@ -124,7 +124,7 @@ function handlePagesUpdate(data) {
 			};
 		};
 		if (updatedFolios.length > 0) {
-			flashMessage('Folios mis à jour : ' + updatedFolios.sort().join(', '));
+			flashMessage('Folios mis à jour : ' + updatedFolios.sort().join(', '), 0);
 		};
 	};
 }

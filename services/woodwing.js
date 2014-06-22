@@ -63,7 +63,9 @@ exports.getPages = function() {
 						pages: body.result.EditionsPages[0]
 					};
 				}
-			);
+			).catch(function(error) {
+				throw 'Code erreur : '+ error.code +' lors de l\'appel : ' + error.syscall;
+			});
 		}
 	);
 }
@@ -99,5 +101,13 @@ var getTicket = function() {
 		function(body){
 			return JSON.parse(body).result.Ticket;
 		}
-	);
+	).catch(function(error) {
+		switch (error.code) {
+			case 'ENOTFOUND':
+				throw 'Le serveur Woodwing est introuvable, vérifier l\'url et l\'état du serveur';
+			break;
+			default:
+				throw 'Code erreur : '+ error.code +' lors de l\'appel : ' + error.syscall;
+		}
+	});
 }

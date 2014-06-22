@@ -3,6 +3,7 @@ extends layout
 block content
 	header#header 
 		h1 #{title}
+		div#connectivityArea.disconnected
 
 	div#planche.horizontal
 		- for (var x = 0; x < nbDoublesPages; x++)
@@ -12,13 +13,13 @@ block content
 			- var folioPageDroite = 2 * x + 1
 			div.doublePagesContainer
 				if pages[indexPageGauche]
-					div(id="page_#{folioPageGauche}").pageContainer.gauche(style="background-image:url("+pages[indexPageGauche]+")")
+					div.pageContainer.gauche(id="page_#{folioPageGauche}", style="background-image:url("+pages[indexPageGauche]+")")
 						div.folio.gauche #{folioPageGauche}
 				else
 					div.pageContainer.gauche.empty
 
 				if pages[indexPageDroite]
-					div(id="page_#{folioPageDroite}").pageContainer.droite(style="background-image:url("+pages[indexPageDroite]+")")
+					div.pageContainer.droite(id="page_#{folioPageDroite}", style="background-image:url("+pages[indexPageDroite]+")")
 						div.folio.droite #{folioPageDroite}
 		
 		input#resizer(type="range", min="1", max="50", value="5")

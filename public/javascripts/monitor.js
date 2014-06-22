@@ -23,7 +23,7 @@ function init() {
 	//events
 	io.on('connect', function() {
 		io.emit('new_monitor');
-	})
+	});
 
 	io.on('CHANGE_DISPLAY_MODE', function(data) {
 		switch (data.value) {
@@ -135,7 +135,7 @@ function handlePagesUpdate(data) {
 			};
 		};
 		if (updatedFolios.length > 0) {
-			flashMessage('Derniers folios mis à jour : ' + updatedFolios.sort().join(', '));
+			flashMessage('Derniers folios mis à jour : ' + updatedFolios.sort().join(', '), 0);
 		};
 	};
 }
