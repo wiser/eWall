@@ -21,6 +21,7 @@ block content
 				if pages[indexPageDroite]
 					div.pageContainer.droite(id="page_#{folioPageDroite}", style="background-image:url("+pages[indexPageDroite]+")")
 						div.folio.droite #{folioPageDroite}
+	div#fixed
 		div#tools
 			div.resizer
 				input#resizer(type="range", min="1", max="50", value="5")
@@ -37,7 +38,7 @@ block content
 
 	footer#footer
 		input#smoothScroll(type="checkbox", name="smoothScroll")
-		label(for="smoothScroll") Défilement doux
+		label(for="smoothScroll")  Défilement avec inertie
 		span#infosArea
 	
 	script(type='text/javascript', src='/javascripts/controller.js')

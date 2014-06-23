@@ -49,6 +49,7 @@ header div {
 }
 
 header div.connected{
+	margin-right: 63px;
 	background-color: green;
 }
 
@@ -124,12 +125,17 @@ div#planche div.folio.droite {
 	right: 5%;
 }
 
+div#fixed {
+		/* le div inferieur est static et ne scroll pas */
+}
+
+
 div#tools {
 	position: fixed;
-	width: 90%;
+	width: 85%;
 	height: 230px;
 	bottom: 30px;
-	left: 60px;
+	left: 65px;
 	background-color: gray;
 	border-radius: 20px;
 	box-shadow: inset 1px 1px 3px rgba(0,0,0,1);
@@ -167,21 +173,21 @@ input#resizer {
 }
 
 div.modeSwitcher {
-	position: fixed;
-	left: 300px;
-	bottom: 190px;
+	position: relative;
+	top: 50px;
+	left: 100px;
 }
 
 div.resetMonitor {
-	position: fixed;
-	left: 300px;
-	bottom: 140px;
+	position: relative;
+	top: 70px;
+	left: 100px;
 }
 
 input#scroller {
-	position: fixed;
-	left: 15%;
-	bottom: 60px;
+	position: relative;
+	top: 150px;
+	left: 100px;
 	width: 80%;
 }
 
